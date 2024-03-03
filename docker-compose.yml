@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  node-server:
+    build: .
+    ports:
+      - "3000:3000"
+    command: npm start
+    environment:
+      - PORT=3000
+    volumes:
+      - "./:/application"
+    depends_on:
+      - mongodb-server
+    tty: true
+
+  mongodb-server:
+    image: mongo:latest
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: root
+    #   MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    tty: true
+
+volumes:
+  mongodb_data_container:
